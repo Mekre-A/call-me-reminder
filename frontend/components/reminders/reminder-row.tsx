@@ -3,8 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import { StatusBadge } from "@/components/reminders/status-badge";
 import { ReminderActions } from "@/components/reminders/reminder-actions";
 import { TimeRemaining } from "@/components/reminders/time-remaining";
-import type { Reminder } from "@/lib/reminders.mock";
 import { format } from "date-fns";
+import { ReminderDTO } from "@/lib/api/reminders";
 
 function maskPhone(phone: string) {
   if (phone.length <= 6) return phone;
@@ -17,7 +17,7 @@ export function ReminderRow({
   onDelete,
   disableDelete,
 }: {
-  reminder: Reminder;
+  reminder: ReminderDTO;
   nowMs: number;
   onDelete: (id: string) => Promise<void>;
   disableDelete?: boolean;

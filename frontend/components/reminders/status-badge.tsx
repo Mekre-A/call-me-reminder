@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import type { ReminderStatus } from "@/lib/reminders.mock"
+import type { ReminderStatus } from "@/lib/types/reminder"
 
 export function StatusBadge({ status }: { status: ReminderStatus }) {
   if (status === "Scheduled") {

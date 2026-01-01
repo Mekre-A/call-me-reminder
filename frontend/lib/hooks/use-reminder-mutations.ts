@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createReminder, updateReminder, deleteReminder } from "@/lib/api/reminder-mutations";
-import type { Reminder } from "@/lib/reminders.mock";
-import type { RemindersQuery } from "@/lib/api/reminders";
+import { createReminder, updateReminder, deleteReminder } from "@/lib/api/reminders";
+import { type ReminderStatus } from "@/lib/types/reminder";
+
 
 export function useCreateReminder() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: Omit<Reminder, "id" | "status">) => createReminder(input),
+    mutationFn: (input: { title: string; message: string; phone: string; scheduledAtIso: string; timezone: string }) =>
+      createReminder(input),
     onSuccess: () => {
-      
       qc.invalidateQueries({ queryKey: ["reminders"] });
     },
   });
@@ -19,7 +19,18 @@ export function useUpdateReminder() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (args: { id: string; input: Partial<Omit<Reminder, "id">> }) => updateReminder(args.id, args.input),
+    mutationFn: (args: {
+      id: string;
+      patch: Partial<{
+        title: string;
+        message: string;
+        phone: string;
+        scheduledAtIso: string;
+        timezone: string;
+        status: ReminderStatus;
+        lastError: string | null;
+      }>;
+    }) => updateReminder({ id: args.id, patch: args.patch }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["reminders"] });
     },

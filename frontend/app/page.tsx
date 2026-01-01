@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-import { useNow } from "@/lib/use-now";
+import { useNow } from "@/lib/hooks/use-now";
 import { ReminderList } from "@/components/reminders/reminder-list";
 
 import { useReminders } from "@/lib/hooks/use-reminders";
@@ -14,22 +14,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useDebouncedValue } from "@/lib/hooks/use-debounced-value";
 import { useDeleteReminder } from "@/lib/hooks/use-reminder-mutations";
+import { ReminderStatus } from "@/lib/types/reminder";
+import { StatCard } from "@/components/reminders/status-card";
 
-function StatCard({ label, value }: { label: string; value: number }) {
-  return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{label}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-semibold tabular-nums">{value}</div>
-      </CardContent>
-    </Card>
-  );
-}
 
 export default function DashboardPage() {
-  const [statusFilter, setStatusFilter] = useState<"all" | "scheduled" | "completed" | "failed">("all");
+  const [statusFilter, setStatusFilter] = useState<"all" | ReminderStatus>("all");
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebouncedValue(query, 300);
   const { data, isLoading, isError, refetch, isFetching } = useReminders({ status: statusFilter, q: debouncedQuery });
@@ -58,14 +48,14 @@ export default function DashboardPage() {
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Tabs
           value={statusFilter}
-          onValueChange={(v) => setStatusFilter(v as "all" | "scheduled" | "completed" | "failed")}
+          onValueChange={(v) => setStatusFilter(v as "all" | ReminderStatus)}
           className="w-full sm:w-auto"
         >
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="scheduled">Scheduled</TabsTrigger>
-            <TabsTrigger value="completed">Completed</TabsTrigger>
-            <TabsTrigger value="failed">Failed</TabsTrigger>
+            <TabsTrigger value="Scheduled">Scheduled</TabsTrigger>
+            <TabsTrigger value="Completed">Completed</TabsTrigger>
+            <TabsTrigger value="Failed">Failed</TabsTrigger>
           </TabsList>
         </Tabs>
 

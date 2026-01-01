@@ -1,9 +1,17 @@
-import { useQuery } from "@tanstack/react-query"
-import { listReminders, type RemindersQuery } from "@/lib/api/reminders"
+import { useQuery } from "@tanstack/react-query";
+import { listReminders, getReminder } from "@/lib/api/reminders";
 
-export function useReminders(query: RemindersQuery) {
+export function useReminders(params: { status?: any; q?: string }) {
   return useQuery({
-    queryKey: ["reminders", query],
-    queryFn: () => listReminders(query),
-  })
+    queryKey: ["reminders", params],
+    queryFn: () => listReminders({ status: params.status, q: params.q }),
+  });
+}
+
+export function useReminder(id?: string) {
+  return useQuery({
+    queryKey: ["reminder", id],
+    queryFn: () => getReminder(id as string),
+    enabled: !!id,
+  });
 }
