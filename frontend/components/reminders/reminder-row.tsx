@@ -4,7 +4,7 @@ import { StatusBadge } from "@/components/reminders/status-badge";
 import { ReminderActions } from "@/components/reminders/reminder-actions";
 import { TimeRemaining } from "@/components/reminders/time-remaining";
 import { format } from "date-fns";
-import { ReminderDTO } from "@/lib/api/reminders";
+import { ReminderDTO } from "@/lib/types/reminder";
 
 function maskPhone(phone: string) {
   if (phone.length <= 6) return phone;

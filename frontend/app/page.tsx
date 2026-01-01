@@ -17,7 +17,6 @@ import { useDeleteReminder } from "@/lib/hooks/use-reminder-mutations";
 import { ReminderStatus } from "@/lib/types/reminder";
 import { StatCard } from "@/components/reminders/status-card";
 
-
 export default function DashboardPage() {
   const [statusFilter, setStatusFilter] = useState<"all" | ReminderStatus>("all");
   const [query, setQuery] = useState("");
@@ -46,11 +45,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Tabs
-          value={statusFilter}
-          onValueChange={(v) => setStatusFilter(v as "all" | ReminderStatus)}
-          className="w-full sm:w-auto"
-        >
+        <Tabs value={statusFilter} onValueChange={(v) => setStatusFilter(v as "all" | ReminderStatus)} className="w-full sm:w-auto">
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="Scheduled">Scheduled</TabsTrigger>
@@ -87,10 +82,12 @@ export default function DashboardPage() {
             ))}
           </div>
         ) : isError ? (
-          <Card>
-            <CardContent className="py-10">
-              <div className="text-sm font-semibold">Something went wrong</div>
-              <div className="mt-1 text-sm text-muted-foreground">We couldn’t load reminders. Please try again.</div>
+          <Card className="border-dashed">
+            <CardContent className="py-14 text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border bg-background">
+              <span className="text-lg">❌</span>
+              </div>
+              <div className="text-base font-semibold">Something went wrong</div>
               <Button onClick={() => refetch()} className="mt-4">
                 Retry
               </Button>

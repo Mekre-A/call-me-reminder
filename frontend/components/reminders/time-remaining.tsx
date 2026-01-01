@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import type { Reminder } from "@/lib/reminders.mock"
+import type { ReminderDTO } from "@/lib/types/reminder"
 
 function formatRemaining(ms: number) {
   if (ms <= 0) return "due now"
@@ -18,7 +18,7 @@ export function TimeRemaining({
   reminder,
   nowMs,
 }: {
-  reminder: Reminder
+  reminder: ReminderDTO
   nowMs: number
 }) {
   if (reminder.status !== "Scheduled") return null

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { Reminder } from "@/lib/reminders.mock";
 import { ReminderRow } from "@/components/reminders/reminder-row";
+import { ReminderDTO } from "@/lib/types/reminder";
 
 export function ReminderList({
   reminders,
@@ -10,7 +10,7 @@ export function ReminderList({
   onDelete,
   disableDelete,
 }: {
-  reminders: Reminder[];
+  reminders: ReminderDTO[];
   nowMs: number;
   onDelete: (id: string) => Promise<void>;
   disableDelete?: boolean;
